@@ -121,19 +121,45 @@
       <button class="btn" id="reset">Reset</button>
       <button class="btn" id="addLibrary">Add to library</button>
     </div>
-    <p class="total">I smoked <span>0</span> cigarettes in all time.</p>
+    <p class="total">
+      I smoked <span id="totalCigarette">0</span> cigarettes in all time.
+    </p>
+
     <script>
+      //localStorage.clear();
+
       const cigaretteCount = document.getElementById("cigaretteCount");
       const addCigarette = document.getElementById("addCigarette");
       const reset = document.getElementById("reset");
+      const addLibrary = document.getElementById("addLibrary");
+      const totalElement = document.getElementById("totalCigarette");
+
+      let allTimeCount = parseInt(localStorage.getItem("allTimeCount")) || 0;
+
+      cigaretteCount.innerText = "0";
+      totalElement.innerText = allTimeCount;
 
       addCigarette.addEventListener("click", () => {
-        const currentCount = parseInt(cigaretteCount.innerText);
-        cigaretteCount.innerText = currentCount + 1;
+        let dailyCount = parseInt(cigaretteCount.innerText) + 1;
+        cigaretteCount.innerText = dailyCount;
       });
 
       reset.addEventListener("click", () => {
-        cigaretteCount.innerText = 0;
+        if (confirm("Are you sure you want to reset today's count?")) {
+          let dailyCount = parseInt(cigaretteCount.innerText);
+          allTimeCount += dailyCount;
+          localStorage.setItem("allTimeCount", allTimeCount);
+          cigaretteCount.innerText = "0"; // Reset daily count
+          totalElement.innerText = allTimeCount;
+        }
+      });
+
+      addLibrary.addEventListener("click", () => {
+        let dailyCount = parseInt(cigaretteCount.innerText);
+        allTimeCount += dailyCount;
+        localStorage.setItem("allTimeCount", allTimeCount);
+        cigaretteCount.innerText = "0"; // Reset daily count
+        totalElement.innerText = allTimeCount;
       });
     </script>
   </body>
