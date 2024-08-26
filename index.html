@@ -145,13 +145,8 @@
       });
 
       reset.addEventListener("click", () => {
-        if (confirm("Are you sure you want to reset today's count?")) {
-          let dailyCount = parseInt(cigaretteCount.innerText);
-          allTimeCount += dailyCount;
-          localStorage.setItem("allTimeCount", allTimeCount);
-          cigaretteCount.innerText = "0"; // Reset daily count
-          totalElement.innerText = allTimeCount;
-        }
+        let dailyCount = parseInt(cigaretteCount.innerText);
+        cigaretteCount.innerText = "0"; // Reset daily count
       });
 
       addLibrary.addEventListener("click", () => {
